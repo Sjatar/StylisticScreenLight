@@ -7,6 +7,13 @@ I try my best to make my plugins efficent and this should run on low end systems
 
 ------------------------------------------------
 
+To install the plugin, simply extract all files in the release zip into: 
+- Items/Assemblies
+
+This is located where you have intalled VNyan.
+
+------------------------------------------------
+
 Make sure you have spout 2 plugin installed to OBS, I recommend and use: https://github.com/Off-World-Live/obs-spout2-plugin/
 
 Make sure you have "Allow 3rd Party mods/Plugins" enabled in VNyan!

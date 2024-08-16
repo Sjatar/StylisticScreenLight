@@ -51,7 +51,8 @@ I will give a fast explanation of each setting.
 - VNyan Source X Offset: OBS VNyan capture offset from the left of the OBS canvas.
 - VNyan Source Y Offset: OBS VNyan capture offset from the bottom of the OBS canvas.
 
-![image](https://github.com/user-attachments/assets/fee7eb9b-541d-4d70-8e6a-b917f795b8ca)
+![image](https://github.com/user-attachments/assets/6a0a90f1-c0b7-4fa6-9681-5455025a7118)
+
 
 -----------------------------------------------
 

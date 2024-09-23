@@ -1,3 +1,10 @@
+BUG: For the spout2 source to change the plugin window has to be open in the current version. 
+I personally hide it in the bottom left corner!
+![VNyan_HboVJBGaKT](https://github.com/user-attachments/assets/4261c852-d4a6-467f-8e9a-898fd26471e2)
+
+
+------------------------------------------------
+
 ![image](https://raw.githubusercontent.com/Sjatar/StylisticScreenLight/main/examplegif.webp)
 
 This plugin for VNyan will shade your character based on a spout texture sent from for example OBS.

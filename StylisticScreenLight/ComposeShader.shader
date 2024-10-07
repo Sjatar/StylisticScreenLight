@@ -11,6 +11,8 @@ Shader "Hidden/StylisticLight"
         _HighLightOffsetX ("float", float) = 0
         _HighLightOffsetY ("float", float) = 0
         _BrightnessThreshold ("float", float) = 0.5
+        _BrightnessFalloff ("float", float) = 0.333
+        _BrightnessFalloffSqrt ("float", float) = 0.577
         _MainXOffset ("float", float) = 0
         _MainYOffset ("float", float) = 0
         _ScreenXOffset ("float", float) = 0
@@ -39,6 +41,8 @@ Shader "Hidden/StylisticLight"
     float _HighLightOffsetX;
     float _HighLightOffsetY;
     float _BrightnessThreshold;
+    float _BrightnessFalloff;
+    float _BrightnessFalloffSqrt;
 
     float _MainXOffset;
     float _MainYOffset;
@@ -89,22 +93,22 @@ Shader "Hidden/StylisticLight"
         float4 pixel_col = tex2D(_MainTex,i.uv_MainTex);
         float4 screen = tex2D(_ScreenTex,i.uv_ScreenTex);
         
-        if (screen.r > _BrightnessThreshold)
+        if (screen.r > _BrightnessThreshold - _BrightnessFalloff + _BrightnessFalloffSqrt)
         {
             screen.r -= _BrightnessThreshold;
-            screen.r = screen.r/(screen.r + 1) + _BrightnessThreshold;
+            screen.r = (screen.r/(screen.r + _BrightnessFalloff)) + _BrightnessThreshold - _BrightnessFalloff + 2*_BrightnessFalloffSqrt-1;
         }
 
-        if (screen.g > _BrightnessThreshold)
+        if (screen.g > _BrightnessThreshold - _BrightnessFalloff + _BrightnessFalloffSqrt)
         {
             screen.g -= _BrightnessThreshold;
-            screen.g = screen.g/(screen.g + 1) + _BrightnessThreshold;
+            screen.g = (screen.g/(screen.g + _BrightnessFalloff)) + _BrightnessThreshold - _BrightnessFalloff + 2*_BrightnessFalloffSqrt-1;
         }
 
-        if (screen.b > _BrightnessThreshold)
+        if (screen.b > _BrightnessThreshold - _BrightnessFalloff + _BrightnessFalloffSqrt)
         {
             screen.b -= _BrightnessThreshold;
-            screen.b = screen.b/(screen.b + 1) + _BrightnessThreshold;
+            screen.b = (screen.b/(screen.b + _BrightnessFalloff)) + _BrightnessThreshold - _BrightnessFalloff + 2*_BrightnessFalloffSqrt-1;
         }
         
         pixel_col.rgb *= _BaseValue + _InputValue * screen.rgb;

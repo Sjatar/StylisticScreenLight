@@ -27,6 +27,7 @@ namespace Sja_StylisticScreenLight
         [SerializeField] public float highLightOffsetX = (float)10;
         [SerializeField] public float highLightOffsetY = (float)10;
         [SerializeField] public float brightnessThreshold = (float)0.5;
+        [SerializeField] public float brightnessFalloff = (float)0;
         
         [Header("Gaussian shader")]
         [SerializeField] public int quality = 64;
@@ -54,15 +55,15 @@ namespace Sja_StylisticScreenLight
         
         public class RenderEffectClass : IRenderEffect
         {
-            void IRenderEffect.onRenderEffect(RenderTexture source, RenderTexture destination)
+            void IRenderEffect.onRenderEffect(object source, object destination)
             {
-                int width = source.width;
-                int height = source.height;
+                int width = 1920;//source.width:
+                int height = 1080;//source.height;
                 int widthScreen = 1920;
                 int heightScreen = 1080;
                 RenderTexture bufferTex1;
                 RenderTexture bufferTex2;
-                gaussMat.SetTexture("_Alpha", source);
+                gaussMat.SetTexture("_Alpha", (RenderTexture)source);
                 
                 bufferTex1 = RenderTexture.GetTemporary(widthScreen, heightScreen);
                 Graphics.Blit(screenTexture, bufferTex1);
@@ -102,7 +103,7 @@ namespace Sja_StylisticScreenLight
 
                 bufferTex1 = RenderTexture.GetTemporary(width, height);
                 bufferTex2 = RenderTexture.GetTemporary(width, height);
-                Graphics.Blit(source, bufferTex1);
+                Graphics.Blit((RenderTexture)source, bufferTex1);
                 
                 for (int i = 0; i < iterationsGauss; i += 1)
                 {
@@ -112,7 +113,7 @@ namespace Sja_StylisticScreenLight
                 RenderTexture.ReleaseTemporary(bufferTex2);
                 comMat.SetTexture("_HighLightTex", bufferTex1);
                 
-                Graphics.Blit(source, destination, comMat);
+                Graphics.Blit((RenderTexture)source, (RenderTexture)destination, comMat);
                 
                     // RenderTexture.ReleaseTemporary(bufferTex1);
                     //
@@ -248,6 +249,7 @@ namespace Sja_StylisticScreenLight
                 para.setVNyanParameterFloat("SSLHighLightOffsetX", highLightOffsetX);
                 para.setVNyanParameterFloat("SSLHighLightOffsetY", highLightOffsetY);
                 para.setVNyanParameterFloat("SSLBrightnessThreshold", brightnessThreshold);
+                para.setVNyanParameterFloat("SSLBrightnessFalloff", brightnessFalloff);
                para.setVNyanParameterString("SSLSpoutSourceName", spoutSourceName);
                
                 para.setVNyanParameterFloat("SSLSpoutWidth", widthBase);
@@ -281,6 +283,8 @@ namespace Sja_StylisticScreenLight
                 comMat.SetFloat("_HighLightOffsetX", highLightOffsetX);
                 comMat.SetFloat("_HighLightOffsetY", highLightOffsetY);
                 comMat.SetFloat("_BrightnessThreshold", brightnessThreshold);
+                comMat.SetFloat("_BrightnessFalloff", 1/(brightnessFalloff+3));
+                comMat.SetFloat("_BrightnessFalloffSqrt", (float)Math.Sqrt(1/(brightnessFalloff+3)));
                 comMat.SetFloat("_MainXOffset", vNyanXOffset);
                 comMat.SetFloat("_MainYOffset", vNyanYOffset);
                 comMat.SetFloat("_ScreenXOffset", spoutXOffset);
@@ -314,6 +318,7 @@ namespace Sja_StylisticScreenLight
                 float highLightOffsetXNew =    (float)para.getVNyanParameterFloat("SSLHighLightOffsetX");
                 float highLightOffsetYNew =    (float)para.getVNyanParameterFloat("SSLHighLightOffsetY");
                 float brightnessThresholdNew = (float)para.getVNyanParameterFloat("SSLBrightnessThreshold");
+                float brightnessFalloffNew = (float)para.getVNyanParameterFloat("SSLBrightnessFalloff");
                 
                 string spoutSourceNameNew =  (string)para.getVNyanParameterString("SSLSpoutSourceName");
                 int widthBaseNew =              (int)para.getVNyanParameterFloat("SSLSpoutWidth");
@@ -390,6 +395,13 @@ namespace Sja_StylisticScreenLight
                 {
                     comMat.SetFloat("_BrightnessThreshold", brightnessThresholdNew);
                     brightnessThreshold = brightnessThresholdNew;
+                }
+
+                if (brightnessFalloffNew != brightnessFalloff)
+                {
+                    comMat.SetFloat("_BrightnessFalloff", 1/(brightnessFalloffNew+3));
+                    comMat.SetFloat("_BrightnessFalloffSqrt", (float)Math.Sqrt(1/(brightnessFalloffNew+3)));
+                    brightnessFalloff = brightnessFalloffNew;
                 }
                 
                 if (baseValueNew != baseValue)

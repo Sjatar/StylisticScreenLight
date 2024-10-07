@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,7 +51,8 @@ namespace Sja_UI
         public void ButtonPressCheck()
         {
             // We need to sanitate the input a bit. Unless the input can be converted to a float we can't use it.
-            if (float.TryParse(mainField.text, out float fieldValue))
+            // We also set the numberstyle to float and allow both "," and "." as delimeters! 
+            if (float.TryParse(mainField.text, NumberStyles.Float, CultureInfo.InvariantCulture, out float fieldValue))
             {
                 // Set the new value!
                 Sja_UICore.VNyanParameters[fieldName] = Convert.ToString(fieldValue);

@@ -14,7 +14,7 @@ I try my best to make my plugins efficent and this should run on low end systems
 
 ------------------------------------------------
 
-To install the plugin, simply extract all files in the release zip into: 
+To install the plugin, simply extract all files in the [release](https://github.com/Sjatar/StylisticScreenLight/releases) zip into: 
 - Items/Assemblies
 
 This is located where you have intalled VNyan.

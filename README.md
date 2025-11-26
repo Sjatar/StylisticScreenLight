@@ -72,5 +72,5 @@ The current values of these settings can be viewed in the monitor if you search 
 It is recomended that you setup a node graph that set these values when you start VNyan and also change them through a node graph if you change the scene.
 
 Here is a example where all the settings are changed. I can provide a node graph example if anybody wants this.
-![image](https://github.com/user-attachments/assets/99bfd7c0-b6d8-45db-9e27-3707afb903e7)
+![image](https://i.imgur.com/XU8hFt8.png)
 
